@@ -150,7 +150,7 @@ curl -X POST http://<server-ip>:4567/post -d 'action=BUILD&x=0&y=0&z=0&material=
         "x": 0,
         "y": 0,
         "z": 0,
-        "line": 2, (ranging fom 0 to 3)
+        "line": 2, (ranging from 0 to 3)
         "text": "Hello, World",
         "action": "EDIT"
     }
