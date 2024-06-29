@@ -48,6 +48,6 @@ public class CrossplayPackage extends JavaPlugin {
             sparkService.stop();
             sparkService.awaitStop();
         }
-        getLogger().info("CrossplayPackage has been enabled!");
+        getLogger().info("CrossplayPackage has been disabled!");
     }
 }
