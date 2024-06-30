@@ -236,6 +236,16 @@ curl https://crossplayproject.xyz/api/uuid/92270a4f-f954-4087-a932-e8d0e5deb2bd/
 ```
 
 **Response**: Returns the skin image in PNG format.
+
+# Demo
+
+We provide a demo server for you to test the plugin without needing to set up a server yourself.
+
+- **Demo Server IP**: `demo.crossplayproject.xyz`
+- **API Base URL**: `https://crossplayproject.xyz/demo/`
+
+To use the endpoints, append the endpoint name to the base URL. For example, to access the `/players` endpoint, use `https://crossplayproject.xyz/demo/players`.
+
 # Support
 
 For support, reach us at [our Discord](https://dc.crossplayproject.xyz).
