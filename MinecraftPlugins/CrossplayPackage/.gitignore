@@ -1,6 +1,7 @@
 ### IntelliJ IDEA ###
 out/
 .idea/*
+!.idea/artifacts/
 !.idea/artifacts/CrossplayPackage_jar.xml
 
 ### Eclipse ###

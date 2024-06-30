@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CrossplayPackage:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/</output-path>
+    <root id="archive" name="CrossplayPackage.jar">
+      <element id="module-output" name="CrossplayPackage" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ExternalLibs/javax.servlet-api-4.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ExternalLibs/jetty-http-9.4.48.v20220622.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ExternalLibs/jetty-io-9.4.48.v20220622.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ExternalLibs/jetty-server-9.4.48.v20220622.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ExternalLibs/jetty-servlet-9.4.48.v20220622.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ExternalLibs/jetty-util-9.4.48.v20220622.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ExternalLibs/spark-core-2.9.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ExternalLibs/spigot-api-1.21-R0.1-20240627.212111-44-shaded.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

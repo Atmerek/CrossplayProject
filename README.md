@@ -196,6 +196,46 @@ The Roblox side provides an example framework to help you start creating your ow
 - **ModifyMode.rbxm**  
   Contains a GUI button for the BreakBlockScript.lua.
 
-## Support
+# Our API
+
+We provide an API to resolve Minecraft player's usernames and skins by their UUIDs. The API supports both Java UUID and Bedrock UUIDs (floodgate).
+
+## Get Username by UUID
+
+**Endpoint**: `/api/uuid/:uuid`
+
+- **Method**: GET
+- **Description**: Retrieves the username associated with the provided UUID.
+- **Parameters**:
+  - `uuid` (string): The UUID of the Minecraft player. Supports both Java and Bedrock UUIDs.
+
+**Example Request**:
+```sh
+curl https://crossplayproject.xyz/api/uuid/92270a4f-f954-4087-a932-e8d0e5deb2bd
+```
+
+**Example Response**:
+```json
+{
+    "username":"TheAtmerek"
+}
+```
+
+## Get Skin by UUID
+
+**Endpoint**: `/api/uuid/:uuid/skin`
+
+- **Method**: GET
+- **Description**: Retrieves the skin associated with the provided UUID.
+- **Parameters**:
+  - `uuid` (string): The UUID of the Minecraft player. Supports both Java and Bedrock UUIDs.
+
+**Example Request**:
+```sh
+curl https://crossplayproject.xyz/api/uuid/92270a4f-f954-4087-a932-e8d0e5deb2bd/skin
+```
+
+**Response**: Returns the skin image in PNG format.
+# Support
 
 For support, reach us at [our Discord](https://dc.crossplayproject.xyz).
