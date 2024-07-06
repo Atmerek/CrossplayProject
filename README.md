@@ -166,11 +166,11 @@ curl -X POST http://<server-ip>:4567/post -d 'action=BUILD&x=0&y=0&z=0&material=
 
 - **Description**: Accepts and provides chat messages from and to Roblox.
 - **Method**: GET, POST
-- **Response**:
+#### Example response:
 ```json
 [{"sender":"The_Atmerek","message":"Hi"},{"sender":"The_Atmerek","message":"Hello"}]
 ```
-- **Payload**:
+#### Example payload:
 ```json
 {
     "player": "Roblox username"
