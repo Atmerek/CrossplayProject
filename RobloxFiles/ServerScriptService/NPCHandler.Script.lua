@@ -39,8 +39,8 @@ local function sendData(player, disconnect)
 			x = adjustedX,
 			y = adjustedY,
 			z = adjustedZ,
-			ya = yaw,
-			pi = pitch
+			yaw = yaw,
+			pitch = pitch
 		}
 	end
 
