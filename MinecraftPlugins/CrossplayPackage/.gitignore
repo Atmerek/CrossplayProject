@@ -1,8 +1,8 @@
 ### IntelliJ IDEA ###
 out/
-.idea/*
-!.idea/artifacts/
-!.idea/artifacts/CrossplayPackage_jar.xml
+.idea/discord.xml
+.idea/workspace.xml
+.idea/vcs.xml
 
 ### Eclipse ###
 .apt_generated
