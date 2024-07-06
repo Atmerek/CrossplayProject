@@ -174,11 +174,28 @@ curl -X POST http://<server-ip>:4567/post -d 'action=BUILD&x=0&y=0&z=0&material=
 #### Example payload:
 ```json
 {
-    "player": "Roblox username"
-    "color": "#FFFFFF"
+    "player": "Roblox username",
+    "color": "#FFFFFF",
     "message": "The message"
 }
 ```
+
+### /npc
+
+- **Description**: Accepts data to spawn an NPC in-game.
+- **Method**: POST
+
+#### Example payload:
+```json
+{
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "yaw": 90,
+    "pitch":45
+}
+```
+
 # Roblox Side
 
 ### Overview
@@ -204,6 +221,9 @@ The Roblox side provides an example framework to help you start creating your ow
 
 - **PlayerHandler.lua**  
   Manages the Minecraft players in Roblox.
+
+  - **NPCHandler.lua**  
+  Manages the Roblox players in Minecraft.
 
 - **TimeHandler.lua**  
   Contains a simple script to convert Minecraft time values and apply them.
