@@ -43,7 +43,7 @@ curl http://<server-ip>:4567/blocks?chunkX=0&chunkZ=0
 
 #### Example request 2:
 ```sh
-curl http://<server-ip>:4567/blocks?chunkX=-1,0,1&chunkZ=-1,0,1
+curl http://<server-ip>:4567/blocks?chunkX=-1,1&chunkZ=-1,1
 ```
 
 #### Example Response:
@@ -170,6 +170,7 @@ curl -X POST http://<server-ip>:4567/post -d 'action=BUILD&x=0&y=0&z=0&material=
 ```json
 [{"sender":"The_Atmerek","message":"Hi"},{"sender":"The_Atmerek","message":"Hello"}]
 ```
+
 #### Example payload:
 ```json
 {
@@ -210,7 +211,7 @@ The Roblox side provides an example framework to help you start creating your ow
 - **ChatHandler.lua**  
   Manages IN and OUT messages.
 
-- **ChatHandler.lua**  
+- **ImageAuth.lua**  
   Little auth script for the remote_img lib.
 
 #### ReplicatedStorage
