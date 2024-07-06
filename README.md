@@ -5,7 +5,7 @@ This repository contains the sources of both the Minecraft and Roblox sides of t
 # Minecraft Side
 
 ## Overview
-The Minecraft side features the CrossplayPackage plugin; a package containing 3 of our smaller plugins.
+The Minecraft side features the CrossplayPackage plugin; a package containing 4 of our smaller plugins.
 
 The plugin hosts a Spark webserver on port `4567` (configurable).
 ## Plugin Compilation from Source
@@ -40,6 +40,12 @@ To compile the plugin from source, follow these steps:
 ```sh
 curl http://<server-ip>:4567/blocks?chunkX=0&chunkZ=0
 ```
+
+#### Example request 2:
+```sh
+curl http://<server-ip>:4567/blocks?chunkX=-1,0,1&chunkZ=-1,0,1
+```
+
 #### Example Response:
 ```json
 [
@@ -155,12 +161,35 @@ curl -X POST http://<server-ip>:4567/post -d 'action=BUILD&x=0&y=0&z=0&material=
         "action": "EDIT"
     }
     ```
+
+### /chat
+
+- **Description**: Accepts and provides chat messages from and to Roblox.
+- **Method**: GET, POST
+- **Response**:
+```json
+[{"sender":"The_Atmerek","message":"Hi"},{"sender":"The_Atmerek","message":"Hello"}]
+```
+- **Payload**:
+```json
+{
+    "player": "Roblox username"
+    "color": "#FFFFFF"
+    "message": "The message"
+}
+```
 # Roblox Side
 
 ### Overview
 The Roblox side provides an example framework to help you start creating your own code. It includes several scripts and models to manage block data and interactions within Roblox.
 
-### Files Included in the Repo
+### Roblox files and scripts:
+
+#### Workspace
+- **Blocks**  
+  A folder to store block models.
+- **Players**  
+  A folder to store player models.
 
 #### ServerScriptService
 - **BlockHandler.lua**  
@@ -170,31 +199,59 @@ The Roblox side provides an example framework to help you start creating your ow
   Manages POST requests for block breaking on the server side.
 
 - **BlockPlaceHandler.lua**  
-  Currently a placeholder.
+  Manages POST requests for block placing on the server side.
+
+- **PlayerHandler.lua**  
+  Manages the Minecraft players in Roblox.
 
 - **TimeHandler.lua**  
   Contains a simple script to convert Minecraft time values and apply them.
 
+- **ChatHandler.lua**  
+  Manages IN and OUT messages.
+
+- **ChatHandler.lua**  
+  Little auth script for the remote_img lib.
+
 #### ReplicatedStorage
+- **models.rbxm**  
+  Contains a folder with a few block models.
+
+- **IP.rbxm**  
+  Contains a text value with the server IP
+
 - **BlockStateManager.lua**  
   An additional module for applying rotation to models.
 
 - **CurrentBlocks.lua**  
   An additional module for synchronizing blocks across scripts.
 
-- **models.rbxm**  
-  Contains a folder with a few block models.
+- **Chat.rbxm**  
+  A RemoteEvent for the chat messages.
+
+- **loadPlayerSkin.rbxm**  
+  A RemoteEvent for applying player skins.
+
+- **remote_img.rbxm**  
+  A module library for managing EditableImage
+
+- **Player.rbxm**  
+  A model of the Minecraft player.
 
 #### StarterPlayer
 - **StarterPlayerScripts**:
   - **BreakBlockScript.lua**  
     Contains the local side of the block breaking system.
   - **PlaceBlockScript.lua**  
-    Currently a placeholder.
+    Contains the local side of the block placing system.
+  - **Chat.lua**  
+    Contains the local side of the chat system.
+  - **SkinLoader.lua**  
+    Contains the local side of the skin system.
 
 #### StarterGui
 - **ModifyMode.rbxm**  
-  Contains a GUI button for the BreakBlockScript.lua.
+  Contains two GUI buttons for the <action>BlockScript.lua.
 
 # Our API
 

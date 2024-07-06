@@ -9,6 +9,7 @@ public class CrossplayPackage extends JavaPlugin {
     private BlockHandler blockHandler;
     private EntityHandler entityHandler;
     private POSTHandler postHandler;
+    private CrossChat crossChat;
     private Service sparkService;
     private int sparkPort;
 
@@ -26,8 +27,12 @@ public class CrossplayPackage extends JavaPlugin {
         blockHandler = new BlockHandler();
         entityHandler = new EntityHandler();
         postHandler = new POSTHandler();
+        crossChat = new CrossChat();
 
         setupSpark();
+        crossChat.startBroadcastTask();
+
+        getServer().getPluginManager().registerEvents(crossChat, this);
 
         getLogger().info("CrossplayPackage has been enabled!");
     }
@@ -39,6 +44,7 @@ public class CrossplayPackage extends JavaPlugin {
         blockHandler.setupRoutes(sparkService);
         entityHandler.setupRoutes(sparkService);
         postHandler.setupRoutes(sparkService);
+        crossChat.setupRoutes(sparkService);
     }
 
     @Override

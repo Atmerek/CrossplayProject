@@ -11,6 +11,7 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/ExternalLibs/jetty-util-9.4.48.v20220622.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/ExternalLibs/spark-core-2.9.4.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/ExternalLibs/spigot-api-1.21-R0.1-20240627.212111-44-shaded.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ExternalLibs/json-20240303.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

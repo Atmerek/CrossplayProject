@@ -7,15 +7,15 @@ local currentBlocks = require(ReplicatedStorage:WaitForChild("CurrentBlocks"))
 
 local modelsFolder = ReplicatedStorage:WaitForChild("models")
 local blockSize = 3
-local updateInterval = 60 / 300 --300 requests per minute
+local updateInterval = 60 / 100 -- 100 requests per minute
 
 -- Biome color table
 local biomeColors = {
 	PLAINS = Color3.fromRGB(145, 189, 89)
 }
 
-local function getChunkBlocks(chunkX, chunkY)
-	local url = "http://localhost:4567/blocks?chunkX=" .. chunkX .. "&chunkZ=" .. chunkY
+local function getChunkBlocks(minChunkX, maxChunkX, minChunkZ, maxChunkZ)
+	local url = string.format("http://%s:4567/blocks?chunkX=%d,%d&chunkZ=%d,%d", ReplicatedStorage.IP.Value, minChunkX, maxChunkX, minChunkZ, maxChunkZ)
 	local success, response = pcall(function() return HttpService:GetAsync(url) end)
 	if success then
 		return HttpService:JSONDecode(response)
@@ -25,25 +25,30 @@ local function getChunkBlocks(chunkX, chunkY)
 	end
 end
 
-
 local function placeBlock(blockData)
 	local key = string.format("%d,%d,%d", blockData.x, blockData.y, blockData.z)
-	if currentBlocks[key] then
-		return currentBlocks[key]
+	local existingBlock = currentBlocks[key]
+
+	if existingBlock then
+		if existingBlock.Name ~= blockData.type then
+			existingBlock:Destroy()
+			currentBlocks[key] = nil
+		else
+			BlockStateManager.applyState(existingBlock, blockData)
+			return existingBlock
+		end
 	end
 
-	
 	local blockType = blockData.type
 	local modelTemplate = modelsFolder:FindFirstChild(blockType)
 
 	if modelTemplate then
 		local modelClone = modelTemplate:Clone()
 		modelClone:SetPrimaryPartCFrame(CFrame.new(blockData.x * blockSize, blockData.y * blockSize, blockData.z * blockSize))
-		modelClone.Parent = Workspace
+		modelClone.Parent = Workspace.Blocks
 
 		BlockStateManager.applyState(modelClone, blockData)
 
-		-- Biome color stuff
 		if blockData.biome then
 			local biome = blockData.biome
 			local color = biomeColors[biome]
@@ -66,90 +71,41 @@ local function placeBlock(blockData)
 			end
 		end
 
+		currentBlocks[key] = modelClone
 		return modelClone
 	else
 		warn("Model for block type " .. blockType .. " not found in ReplicatedStorage.models")
+		return nil
 	end
 end
 
-local function updateBlocks(newBlocks)
-	local newBlockKeys = {}
-	for _, blockData in ipairs(newBlocks) do
+local function updateBlocks(chunkData)
+	local newBlocks = {}
+
+	for _, blockData in ipairs(chunkData) do
 		local key = string.format("%d,%d,%d", blockData.x, blockData.y, blockData.z)
-		newBlockKeys[key] = blockData
+		newBlocks[key] = placeBlock(blockData)
 	end
 
-	-- Update existing blocks
 	for key, block in pairs(currentBlocks) do
-		local blockData = newBlockKeys[key]
-		if blockData then
-
-			BlockStateManager.applyState(block, blockData)
-
-			if blockData.biome then
-				local biome = blockData.biome
-				local color = biomeColors[biome]
-				if color then
-					for _, descendant in ipairs(block:GetDescendants()) do
-						if blockData.type == "GRASS_BLOCK" then
-							if descendant:IsA("Texture") or descendant:IsA("Decal") then
-								if string.match(descendant.Name, "_Overlay$") then
-									descendant.Color3 = color
-								end
-							end
-						else
-							if descendant:IsA("BasePart") then
-								descendant.Color = color
-							elseif descendant:IsA("Texture") or descendant:IsA("Decal") then
-								descendant.Color3 = color
-							end
-						end
-					end
-				end
-			end
-
-			-- Remove updated block from newBlockKeys to track remaining new blocks
-			newBlockKeys[key] = nil
-		else
-			-- Block no longer exists, destroy it
+		if not newBlocks[key] then
 			block:Destroy()
 			currentBlocks[key] = nil
 		end
-	end
-
-	-- Create new blocks in batches of 200
-	local batchSize = 200
-	local blockCount = #newBlocks
-	for i = 1, blockCount, batchSize do
-		local batchEnd = math.min(i + batchSize - 1, blockCount)
-		local batch = {}
-		for j = i, batchEnd do
-			table.insert(batch, newBlocks[j])
-		end
-		for _, blockData in ipairs(batch) do
-			currentBlocks[string.format("%d,%d,%d", blockData.x, blockData.y, blockData.z)] = placeBlock(blockData)
-		end
-		wait()
 	end
 end
 
 local function loadChunks(centerChunkX, centerChunkY, chunkGridSize)
 	local halfGridSize = math.floor(chunkGridSize / 2)
-	local allBlocks = {}
+	local minChunkX = centerChunkX - halfGridSize
+	local maxChunkX = centerChunkX + halfGridSize
+	local minChunkZ = centerChunkY - halfGridSize
+	local maxChunkZ = centerChunkY + halfGridSize
 
-	for offsetX = -halfGridSize, halfGridSize do
-		for offsetY = -halfGridSize, halfGridSize do
-			local chunkX = centerChunkX + offsetX
-			local chunkY = centerChunkY + offsetY
-			local blocks = getChunkBlocks(chunkX, chunkY)
-
-			for _, blockData in ipairs(blocks) do
-				table.insert(allBlocks, blockData)
-			end
-		end
+	local chunkData = getChunkBlocks(minChunkX, maxChunkX, minChunkZ, maxChunkZ)
+	if chunkData then
+		updateBlocks(chunkData)
 	end
-
-	updateBlocks(allBlocks)
 end
 
 local function startUpdatingChunks(centerChunkX, centerChunkY, chunkGridSize)
