@@ -1,47 +1,48 @@
 # The Crossplay Project Source
-This repository contains the sources of both the Minecraft and Roblox sides of the crossplay.
+This repository contains the source code for both the Minecraft and Roblox sides of the Crossplay Project.
 
 ![logo](https://crossplayproject.xyz/assets/img/logo.png)
 # Minecraft Side
 
 ## Overview
-The Minecraft side features the CrossplayPackage plugin; a package containing 4 of our smaller plugins.
+The Minecraft side features the CrossplayPackage plugin; a package containing 5 of our smaller plugins.
 
 The plugin hosts a Spark webserver on port `4567` (configurable).
+
 ## Plugin Compilation from Source
 
 To compile the plugin from source, follow these steps:
 
-1.**Install IntelliJ IDEA**: If you haven't already, download and install [IntelliJ IDEA](https://www.jetbrains.com/idea/).
+1. **Install IntelliJ IDEA**: If you haven't already, download and install [IntelliJ IDEA](https://www.jetbrains.com/idea/).
 
-2.**Download the CrossplayPackage Directory**: Obtain the source code directory for CrossplayPackage.
+2. **Download the CrossplayPackage Directory**: Obtain the source code directory for CrossplayPackage.
 
-3.**Open as IntelliJ Project**:
+3. **Open as IntelliJ Project**:
    - Launch IntelliJ IDEA.
    - Open the CrossplayPackage directory as an IntelliJ project.
 
-4.**Build the Plugin**:
+4. **Build the Plugin**:
    - Go to **Build** > **Build Artifacts** in the IntelliJ menu.
    - Select the action **Build**.
 
-5.**Locate the Compiled JAR**:
+5. **Locate the Compiled JAR**:
    - After the build process completes, the compiled `.jar` file will be located in the `out/artifacts` folder within your IntelliJ project directory.
 
 ## Endpoints
 
 ### /blocks 
 
-- **Description**: Retrieves all blocks in a specified chunk.
+- **Description**: Retrieves all blocks in specified chunk(s).
 - **Method**: GET
 - **Arguments**: chunkX (int), chunkZ (int)
 - **Response**: JSON array of blocks in the chunk from height -1 to 319.
 
-#### Example request:
+#### Example request for a single chunk:
 ```sh
 curl http://<server-ip>:4567/blocks?chunkX=0&chunkZ=0
 ```
 
-#### Example request 2:
+#### Example request for multiple chunks (3x3 grid with center at 0,0):
 ```sh
 curl http://<server-ip>:4567/blocks?chunkX=-1,1&chunkZ=-1,1
 ```
@@ -100,7 +101,7 @@ curl http://<server-ip>:4567/world
 ```
 #### Example Response:
 ```json
-{"time":22336,"thundering":false,"raining":false}
+{"time":6000,"thundering":false,"raining":false}
 ```
 
 ### /post
@@ -174,9 +175,9 @@ curl -X POST http://<server-ip>:4567/post -d 'action=BUILD&x=0&y=0&z=0&material=
 #### Example payload:
 ```json
 {
-    "player": "Roblox username",
+    "player": "wwwdr666",
     "color": "#FFFFFF",
-    "message": "The message"
+    "message": "Hewoo~"
 }
 ```
 
@@ -192,14 +193,15 @@ curl -X POST http://<server-ip>:4567/post -d 'action=BUILD&x=0&y=0&z=0&material=
     "y": 0,
     "z": 0,
     "yaw": 90,
-    "pitch":45
+    "pitch": 45,
+    "disconnect": true (optional)
 }
 ```
 
 # Roblox Side
 
 ### Overview
-The Roblox side provides an example framework to help you start creating your own code. It includes several scripts and models to manage block data and interactions within Roblox.
+The Roblox side provides a framework to help you start creating your own code. It includes several scripts and models to manage block data and interactions within Roblox.
 
 ### Roblox files and scripts:
 
@@ -222,24 +224,24 @@ The Roblox side provides an example framework to help you start creating your ow
 - **PlayerHandler.lua**  
   Manages the Minecraft players in Roblox.
 
-  - **NPCHandler.lua**  
+- **NPCHandler.lua**  
   Manages the Roblox players in Minecraft.
 
 - **TimeHandler.lua**  
-  Contains a simple script to convert Minecraft time values and apply them.
+  Contains a script to convert Minecraft time values and apply them.
 
 - **ChatHandler.lua**  
-  Manages IN and OUT messages.
+  Manages in and out messages.
 
 - **ImageAuth.lua**  
-  Little auth script for the remote_img lib.
+  An authentication script for the remote_img library.
 
 #### ReplicatedStorage
 - **models.rbxm**  
   Contains a folder with a few block models.
 
 - **IP.rbxm**  
-  Contains a text value with the server IP
+  Contains a text value with the server IP.
 
 - **BlockStateManager.lua**  
   An additional module for applying rotation to models.
@@ -254,7 +256,7 @@ The Roblox side provides an example framework to help you start creating your ow
   A RemoteEvent for applying player skins.
 
 - **remote_img.rbxm**  
-  A module library for managing EditableImage
+  A module library for managing EditableImage.
 
 - **Player.rbxm**  
   A model of the Minecraft player.
@@ -272,11 +274,11 @@ The Roblox side provides an example framework to help you start creating your ow
 
 #### StarterGui
 - **ModifyMode.rbxm**  
-  Contains two GUI buttons for the <action>BlockScript.lua.
+  Contains two GUI buttons for the action scripts.
 
 # Our API
 
-We provide an API to resolve Minecraft player's usernames and skins by their UUIDs. The API supports both Java UUID and Bedrock UUIDs (floodgate).
+We provide an API to resolve Minecraft player's usernames and skins by their UUIDs. The API supports both Java and Bedrock (floodgate) UUIDs.
 
 ## Get Username by UUID
 
@@ -295,7 +297,7 @@ curl https://crossplayproject.xyz/api/uuid/92270a4f-f954-4087-a932-e8d0e5deb2bd
 **Example Response**:
 ```json
 {
-    "username":"TheAtmerek"
+    "username":"The_Atmerek"
 }
 ```
 
