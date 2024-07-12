@@ -29,6 +29,15 @@ public class NPCHandler {
         spark.post("/npc", NPCHandler::handleDataRequest);
     }
 
+    public void disabledRoute(spark.Service spark) {
+        spark.post("/npc", NPCHandler::handleDisabledRequest);
+    }
+
+    private static String handleDisabledRequest(Request req, Response res) {
+        res.status(503);
+        return "Citizens plugin not found. Module Disabled. NPC cannot be spawned.";
+    }
+
     private static String handleDataRequest(Request req, Response res) {
         try {
             Gson gson = new Gson();
@@ -69,7 +78,7 @@ public class NPCHandler {
                 return;
             }
 
-            World world = Bukkit.getWorlds().get(0);
+            World world = Bukkit.getWorlds().getFirst();
             if (world == null) {
                 Bukkit.getLogger().warning("World 0 not found!");
                 return;

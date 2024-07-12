@@ -63,8 +63,7 @@ public class EntityHandler {
         for (World world : Bukkit.getServer().getWorlds()) {
             for (Chunk chunk : world.getLoadedChunks()) {
                 for (Entity entity : chunk.getEntities()) {
-                    if (entity instanceof LivingEntity && !(entity instanceof org.bukkit.entity.Player)) {
-                        LivingEntity livingEntity = (LivingEntity) entity;
+                    if (entity instanceof LivingEntity livingEntity && !(entity instanceof org.bukkit.entity.Player)) {
                         String mobType = livingEntity.getType().name();
                         mobPositions.add(new MobPosition(
                                 livingEntity.getUniqueId().toString(),
@@ -75,8 +74,7 @@ public class EntityHandler {
                                 livingEntity.getLocation().getPitch(),
                                 mobType
                         ));
-                    } else if (entity instanceof TNTPrimed) {
-                        TNTPrimed primedTNT = (TNTPrimed) entity;
+                    } else if (entity instanceof TNTPrimed primedTNT) {
                         Location tntLocation = primedTNT.getLocation();
                         mobPositions.add(new MobPosition(
                                 primedTNT.getUniqueId().toString(),
@@ -95,7 +93,7 @@ public class EntityHandler {
     }
 
     private WorldState getWorldState() {
-        World world = Bukkit.getServer().getWorlds().get(0);
+        World world = Bukkit.getServer().getWorlds().getFirst();
 
         long time = world.getTime();
         boolean thundering = world.isThundering();

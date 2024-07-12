@@ -1,5 +1,7 @@
 package xyz.crossplayproject;
 
+import net.md_5.bungee.chat.SelectorComponentSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import spark.Service;
@@ -37,6 +39,7 @@ public class CrossplayPackage extends JavaPlugin {
         getServer().getPluginManager().registerEvents(crossChat, this);
 
         getLogger().info("CrossplayPackage has been enabled!");
+
     }
 
     private void setupSpark() {
@@ -47,7 +50,13 @@ public class CrossplayPackage extends JavaPlugin {
         entityHandler.setupRoutes(sparkService);
         postHandler.setupRoutes(sparkService);
         crossChat.setupRoutes(sparkService);
-        npcHandler.setupRoutes(sparkService);
+
+        if (!Bukkit.getPluginManager().isPluginEnabled("Citizens")) {
+            getLogger().warning("Citizens plugin is not installed or enabled. NPCHandler disabled.");
+            npcHandler.disabledRoute(sparkService);
+        } else {
+            npcHandler.setupRoutes(sparkService);
+        }
     }
 
     @Override
@@ -57,6 +66,6 @@ public class CrossplayPackage extends JavaPlugin {
             sparkService.stop();
             sparkService.awaitStop();
         }
-        getLogger().info("CrossplayPackage has been enabled!");
+        getLogger().info("CrossplayPackage has been disabled!");
     }
 }

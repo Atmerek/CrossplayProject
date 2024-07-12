@@ -19,6 +19,7 @@ public class CrossChat implements Listener {
     private final List<JSONObject> robloxMessages = new ArrayList<>();
 
     public void setupRoutes(Service spark) {
+        spark.get("/favicon.ico", (req, res) -> "");
 
         spark.post("/chat", (req, res) -> {
             JSONObject requestBody = new JSONObject(req.body());

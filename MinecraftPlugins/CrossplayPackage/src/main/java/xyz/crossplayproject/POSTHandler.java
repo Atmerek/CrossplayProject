@@ -21,6 +21,8 @@ public class POSTHandler {
     private final Gson gson = new Gson();
 
     public void setupRoutes(Service spark) {
+        spark.get("/favicon.ico", (req, res) -> "");
+
         spark.post("/post", (request, response) -> {
             JsonObject json = gson.fromJson(request.body(), JsonObject.class);
             int x = json.get("x").getAsInt();
@@ -28,7 +30,7 @@ public class POSTHandler {
             int z = json.get("z").getAsInt();
             String action = json.get("action").getAsString();
 
-            World world = Bukkit.getWorlds().get(0);
+            World world = Bukkit.getWorlds().getFirst();
 
             switch (action.toUpperCase()) {
                 case "BUILD":
@@ -50,8 +52,6 @@ public class POSTHandler {
             response.status(200);
             return "Success";
         });
-
-        spark.get("/favicon.ico", (req, res) -> "");
     }
 
     private void buildBlock(World world, int x, int y, int z, JsonObject json) {
@@ -69,8 +69,7 @@ public class POSTHandler {
                 Block block = world.getBlockAt(x, y, z);
                 if (block.getType() == Material.AIR) {
                     block.setType(material);
-                    if (block.getBlockData() instanceof org.bukkit.block.data.Directional) {
-                        org.bukkit.block.data.Directional directional = (org.bukkit.block.data.Directional) block.getBlockData();
+                    if (block.getBlockData() instanceof org.bukkit.block.data.Directional directional) {
                         directional.setFacing(direction);
                         block.setBlockData(directional);
                     }
@@ -116,8 +115,7 @@ public class POSTHandler {
 
     private void toggleLever(Block block) {
         BlockData blockData = block.getBlockData();
-        if (blockData instanceof Powerable) {
-            Powerable powerable = (Powerable) blockData;
+        if (blockData instanceof Powerable powerable) {
             powerable.setPowered(!powerable.isPowered());
             block.setBlockData(powerable);
             if(powerable.isPowered()) {
@@ -130,8 +128,7 @@ public class POSTHandler {
 
     private void toggleButton(Block block) {
         BlockData blockData = block.getBlockData();
-        if (blockData instanceof Powerable) {
-            Powerable powerable = (Powerable) blockData;
+        if (blockData instanceof Powerable powerable) {
             powerable.setPowered(!powerable.isPowered());
             block.setBlockData(powerable);
             block.getWorld().playSound(block.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1.0f, 1.0f);
@@ -146,8 +143,7 @@ public class POSTHandler {
 
     private void toggleDoor(Block block) {
         BlockData blockData = block.getBlockData();
-        if (blockData instanceof Openable) {
-            Openable openable = (Openable) blockData;
+        if (blockData instanceof Openable openable) {
             openable.setOpen(!openable.isOpen());
             block.setBlockData(openable);
             block.getWorld().playSound(block.getLocation(), Sound.BLOCK_WOODEN_DOOR_OPEN, 1.0f, 1.0f);
@@ -159,8 +155,7 @@ public class POSTHandler {
             @Override
             public void run() {
                 Block block = world.getBlockAt(x, y, z);
-                if (block.getState() instanceof Sign) {
-                    Sign sign = (Sign) block.getState();
+                if (block.getState() instanceof Sign sign) {
                     int line = json.get("line").getAsInt();
                     String text = json.get("text").getAsString();
                     sign.setLine(line, text);
