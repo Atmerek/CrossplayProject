@@ -34,7 +34,7 @@ To compile the plugin from source, follow these steps:
 
 - **Description**: Retrieves all blocks in specified chunk(s).
 - **Method**: GET
-- **Arguments**: chunkX (int), chunkZ (int)
+- **Arguments**: chunkX and chunkZ OR cord1 and cord2.
 - **Response**: JSON array of blocks in the chunk from height -1 to 319.
 
 #### Example request for a single chunk:
@@ -45,6 +45,11 @@ curl http://<server-ip>:4567/blocks?chunkX=0&chunkZ=0
 #### Example request for multiple chunks (3x3 grid with center at 0,0):
 ```sh
 curl http://<server-ip>:4567/blocks?chunkX=-1,1&chunkZ=-1,1
+```
+
+#### Example request for an exact area:
+```sh
+curl http://<server-ip>:4567/blocks?cord1=15,0,15&cord2=-15,25,-15
 ```
 
 #### Example Response:
