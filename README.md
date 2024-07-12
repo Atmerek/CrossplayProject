@@ -32,10 +32,10 @@ To compile the plugin from source, follow these steps:
 
 ### /blocks 
 
-- **Description**: Retrieves all blocks in specified chunk(s).
+- **Description**: Retrieves all blocks in specified chunk(s) or area.
 - **Method**: GET
 - **Arguments**: chunkX and chunkZ OR cord1 and cord2.
-- **Response**: JSON array of blocks in the chunk from height -1 to 319.
+- **Response**: JSON array of blocks.
 
 #### Example request for a single chunk:
 ```sh
@@ -55,8 +55,9 @@ curl http://<server-ip>:4567/blocks?cord1=15,0,15&cord2=-15,25,-15
 #### Example Response:
 ```json
 [
-    {"type":"OAK_LOG","x":7,"y":0,"z":2,"state":"minecraft:oak_log[axis\u003dy]"},
-    {"type":"GRASS_BLOCK","x":7,"y":-1,"z":3,"state":"minecraft:grass_block[snowy\u003dfalse]","biome":"PLAINS"}
+    {"t":"OAK_LOG","x":7,"y":0,"z":2,"s":"axis\u003dy"},
+    {"t":"GRASS_BLOCK","x":7,"y":-1,"z":3,"s":"snowy\u003dfalse","b":"PLAINS"},
+    {"t":"STONE","x": 0,"y": 0,"z": 0}
 ]
 ```
 

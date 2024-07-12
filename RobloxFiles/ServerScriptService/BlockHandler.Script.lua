@@ -30,7 +30,7 @@ local function placeBlock(blockData)
 	local existingBlock = currentBlocks[key]
 
 	if existingBlock then
-		if existingBlock.Name ~= blockData.type then
+		if existingBlock.Name ~= blockData.t then
 			existingBlock:Destroy()
 			currentBlocks[key] = nil
 		else
@@ -39,7 +39,7 @@ local function placeBlock(blockData)
 		end
 	end
 
-	local blockType = blockData.type
+	local blockType = blockData.t
 	local modelTemplate = modelsFolder:FindFirstChild(blockType)
 
 	if modelTemplate then
@@ -49,8 +49,8 @@ local function placeBlock(blockData)
 
 		BlockStateManager.applyState(modelClone, blockData)
 
-		if blockData.biome then
-			local biome = blockData.biome
+		if blockData.b then
+			local biome = blockData.b
 			local color = biomeColors[biome]
 			if color then
 				for _, descendant in ipairs(modelClone:GetDescendants()) do
