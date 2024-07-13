@@ -325,9 +325,11 @@ curl https://crossplayproject.xyz/api/uuid/92270a4f-f954-4087-a932-e8d0e5deb2bd/
 
 # Demo
 
-We provide a demo server for you to test the plugin without needing to set up a server yourself.
+We provide a demo for you to test the source without needing to set up everything yourself.
 
 - **Demo Server IP**: `demo.crossplayproject.xyz`
+- **Demo Roblox link**: [🙀](https://www.roblox.com/games/18468309810/The-Crossplay-Project-Source)
+
 - **API Base URL**: `https://crossplayproject.xyz/demo/`
 
 To use the endpoints, append the endpoint name to the base URL. For example, to access the `/players` endpoint, use `https://crossplayproject.xyz/demo/players`.
