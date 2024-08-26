@@ -2,8 +2,8 @@ package xyz.crossplayproject;
 
 import com.google.gson.Gson;
 import net.citizensnpcs.api.CitizensAPI;
-import net.citizensnpcs.api.npc.MemoryNPCDataStore;
 import net.citizensnpcs.api.npc.NPC;
+import net.citizensnpcs.api.npc.NPCRegistry;
 import net.citizensnpcs.trait.Gravity;
 import net.citizensnpcs.trait.SkinTrait;
 import org.bukkit.Bukkit;
@@ -24,6 +24,7 @@ public class NPCHandler {
 
     private static final Map<String, NPC> npcs = new HashMap<>();
     private static final Map<String, BukkitRunnable> currentTasks = new HashMap<>();
+    private static final NPCRegistry npcRegistry = CitizensAPI.getNPCRegistry();
 
     public void setupRoutes(spark.Service spark) {
         spark.post("/npc", NPCHandler::handleDataRequest);
@@ -138,15 +139,15 @@ public class NPCHandler {
 
 
         private void spawnNPC(String user, Location targetLocation) {
-            NPC npc = CitizensAPI.createAnonymousNPCRegistry(new MemoryNPCDataStore()).createNPC(EntityType.PLAYER, user);
+            NPC npc = npcRegistry.createNPC(EntityType.PLAYER, user);
             SkinTrait skinTrait = npc.getOrAddTrait(SkinTrait.class);
             String uniqueId = "44513fe2";
             String signature = "h4HqPM8t49wNC0vw1I5vrwAHAlMIFBJkISjFGqU3fI5oig2QIpo3NIsQrK93vBsMhLVT+p7l5+BFvm3ZyMi7DfYcswgoVMkKlu+Abn6XPH8TruYoVs6GGw0sJ6xR6mN8TTnL0dPMkNFyoyk5S4P2cKU2KkG69ajHDD5iie/sEm+VrVgAb6iBpaFIhVptlqcca488dKp6y5FvywP+WIOcgcH99tcuOus1GiE8VXzu21+hGRwAa2Gv69uTLJmqzSpk9tS+2wLlYqETXRLDSC/fErBTWGYHh34+rkmXbABlo7jLu1AWgoO4tnwWQ1aIwyb1eoaaOUDuidQWrQsjr2bb7+cSQDHNdP4OXY8dzOiUwRxLBRmBP7cHHZuvxDTiy0PcLbzr+mcX033s83rhKCH4lYgiA+RwJIrCLSn+illWfWbws9me342ScFqd5uSCuiIHVRPB1Zl8O3XQJT4rXtBm7MLxahihZsPsrYRT7bZ+Qqn6XTNodh3yBHpaBQsgCQQmqdsg+xSGM/QfyFPaEqP9b47nmALNqjQXGUagi+TDFg1CUJ1Loc14tzqwwZdUHeyPAomv2ZSiyK7c/25H23Yu8bnnoFNIfiWPQxUXg6ROssDGa1xuFjOpyRiio0yOYZRNYbQYT53BCc5ykjl1gqLK/BHz47zziX7bLQ5F/UUiMxc=";
             String texture = "ewogICJ0aW1lc3RhbXAiIDogMTY0MDQ5NTY3NTk0NSwKICAicHJvZmlsZUlkIiA6ICIzOWEzOTMzZWE4MjU0OGU3ODQwNzQ1YzBjNGY3MjU2ZCIsCiAgInByb2ZpbGVOYW1lIiA6ICJkZW1pbmVjcmFmdGVybG9sIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2FmYjFiMzM2MjQwNDk1NjBlMjc2YWEwYTY2M2FiMmI3MDI2Yzk0MzE5NTIwOGFhYmY5NDljODU1MTlkZTJjYTIiCiAgICB9CiAgfQp9";
             skinTrait.setSkinPersistent(uniqueId, signature, texture);
 
-            Gravity gravityTrait = npc.getTrait(Gravity.class);
-            gravityTrait.gravitate(true);
+            Gravity gravityTrait = npc.getOrAddTrait(Gravity.class);
+            gravityTrait.setHasGravity(false);
 
             npc.spawn(targetLocation);
             npcs.put(user, npc);
