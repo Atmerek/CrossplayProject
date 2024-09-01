@@ -323,13 +323,80 @@ curl https://crossplayproject.xyz/api/uuid/92270a4f-f954-4087-a932-e8d0e5deb2bd/
 
 **Response**: Returns the skin image in PNG format.
 
+# Selfhosting
+
+**To selfhost the project, you will need a host that supports custom HTTP ports and plugins (if it can run Dynmap, it can probably run this), or a plain VPS server.**
+
+### Minecraft Side
+
+**Hosting on a Linux VPS server:**
+
+1. **Install Java**: Ensure Java 21 is installed by running `java --version`. If not installed, run `sudo apt install openjdk-21-jdk`.
+
+2. **Prepare Directory**:
+   - Create a new directory for your Minecraft server: 
+     ```sh
+     mkdir <folder-name>
+     cd <folder-name>
+     ```
+
+3. **Download Server Software**:
+   - Download a [Paper](https://papermc.io/software/paper) or [Spigot](https://getbukkit.org/download/spigot) server .jar file:
+     ```sh
+     wget <url>
+     ```
+
+4. **Run the Server**:
+   - Start the server with allocated memory:
+     ```sh
+     java -Xmx<max-ram>M -Xms<min-ram>M -jar <jar-name>.jar
+     ```
+
+5. **Agree to EULA**:
+   - Edit `eula.txt` to accept the EULA:
+     ```sh
+     nano eula.txt
+     ```
+   - Change `false` to `true`, save with `CTRL+O`, and exit with `CTRL+X`.
+
+6. **Configure Server**:
+   - Modify `server.properties`:
+     ```sh
+     nano server.properties
+     ```
+   - Add `{"layers":[{"block":"minecraft:air","height":63},{"block":"minecraft:grass_block","height":1}]}` to the `generator-settings` field.
+   - Set `level-type` to `minecraft:flat`.
+
+7. **Install Plugins**:
+   - Navigate to the `plugins` directory (create it if necessary) and download the required plugins:
+     - [CrossplayPackage.jar](https://github.com/Atmerek/CrossplayProject/releases/tag/v1.3)
+     - [Citizens-2.0.35.jar](https://ci.citizensnpcs.co/job/citizens2/)
+
+8. **Start Server**:
+   - Run the server again and allow it to generate necessary files.
+
+**Note**: Additional hosting options may be provided in the future.
+
+### Roblox Side
+
+1. **Upload Game**:
+   - Download the Roblox game or create your own from the source, then upload it to Roblox.
+
+2. **Configure IP**:
+   - Set the IP of your Minecraft server's HTTP endpoint in `ReplicatedStorage`.
+
+3. **Enable HTTP Requests**:
+   - Go to game settings on Roblox and enable HTTP requests.
+
+For further details, contact support.
+
+
 # Demo
 
 We provide a demo for you to test the source without needing to set up everything yourself.
 
 - **Demo Server IP**: `demo.crossplayproject.xyz`
 - **Demo Roblox link**: [🙀](https://www.roblox.com/games/18468309810/The-Crossplay-Project-Source)
-
 - **API Base URL**: `https://crossplayproject.xyz/demo/`
 
 To use the endpoints, append the endpoint name to the base URL. For example, to access the `/players` endpoint, use `https://crossplayproject.xyz/demo/players`.
