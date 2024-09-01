@@ -1,10 +1,15 @@
 package xyz.crossplayproject;
 
-import net.md_5.bungee.chat.SelectorComponentSerializer;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import spark.Service;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CrossplayPackage extends JavaPlugin {
 
@@ -27,7 +32,10 @@ public class CrossplayPackage extends JavaPlugin {
         FileConfiguration config = getConfig();
         sparkPort = config.getInt("webserver.port", 4567);
 
-        blockHandler = new BlockHandler();
+        Set<Material> biomeSensitiveBlocks = loadMaterials(config.getStringList("blocks.biomeSensitive"));
+        Set<Material> nonObstructingBlocks = loadMaterials(config.getStringList("blocks.nonObstructing"));
+        boolean enableCulling = config.getBoolean("enableCulling", false);
+        blockHandler = new BlockHandler(biomeSensitiveBlocks, nonObstructingBlocks, enableCulling);
         entityHandler = new EntityHandler();
         postHandler = new POSTHandler();
         crossChat = new CrossChat();
@@ -40,6 +48,20 @@ public class CrossplayPackage extends JavaPlugin {
 
         getLogger().info("CrossplayPackage has been enabled!");
 
+    }
+
+    private Set<Material> loadMaterials(List<String> materialNames) {
+        return materialNames.stream()
+                .map(name -> {
+                    try {
+                        return Material.valueOf(name);
+                    } catch (IllegalArgumentException e) {
+                        getLogger().warning("Invalid material name in config: " + name);
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
     }
 
     private void setupSpark() {
@@ -58,6 +80,7 @@ public class CrossplayPackage extends JavaPlugin {
             npcHandler.setupRoutes(sparkService);
         }
     }
+
 
     @Override
     public void onDisable() {

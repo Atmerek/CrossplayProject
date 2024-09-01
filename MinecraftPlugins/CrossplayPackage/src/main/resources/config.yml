@@ -1,2 +1,20 @@
 webserver:
-  port: 4567  # Change the port as needed
+  port: 4567
+
+enableCulling: false # If this is enabled, the webserver won't serve invisible blocks
+
+blocks:
+  biomeSensitive: # Those blocks will have the biome field
+    - GRASS_BLOCK
+    - SHORT_GRASS
+    - TALL_GRASS
+    - FERN
+    - LARGE_FERN
+  nonObstructing: # Those blocks won't make other invisible if culling is enabled
+    - WATER
+    - GLASS
+    - SHORT_GRASS
+    - TALL_GRASS
+    - FERN
+    - LARGE_FERN
+    
