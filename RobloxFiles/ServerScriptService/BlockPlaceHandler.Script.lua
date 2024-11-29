@@ -24,7 +24,7 @@ local function onBlockPlace(player, blockData)
 		action = "BUILD"
 	}
 
-	local url = "http://" .. ReplicatedStorage.IP.Value .. ":4567/post"
+	local url = "http://" .. ReplicatedStorage.IP.Value .. "/post"
 	local success, response = pcall(function()
 		return HttpService:PostAsync(url, HttpService:JSONEncode(data), Enum.HttpContentType.ApplicationJson)
 	end)

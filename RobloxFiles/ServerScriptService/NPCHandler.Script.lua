@@ -6,7 +6,7 @@ local updateInterval = 60 / 100 -- 100 requests per minute
 local lastPositions = {}
 
 local function sendData(player, disconnect)
-	local url = "http://" .. replicatedStorage.IP.Value .. ":4567/npc"
+	local url = "http://" .. replicatedStorage.IP.Value .. "/npc"
 	local postData
 
 	if disconnect then
