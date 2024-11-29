@@ -15,7 +15,7 @@ local biomeColors = {
 }
 
 local function getChunkBlocks(minChunkX, maxChunkX, minChunkZ, maxChunkZ)
-	local url = string.format("http://%s:4567/blocks?chunkX=%d,%d&chunkZ=%d,%d", ReplicatedStorage.IP.Value, minChunkX, maxChunkX, minChunkZ, maxChunkZ)
+	local url = string.format("http://%s/blocks?chunkX=%d,%d&chunkZ=%d,%d", ReplicatedStorage.IP.Value, minChunkX, maxChunkX, minChunkZ, maxChunkZ)
 	local success, response = pcall(function() return HttpService:GetAsync(url) end)
 	if success then
 		return HttpService:JSONDecode(response)

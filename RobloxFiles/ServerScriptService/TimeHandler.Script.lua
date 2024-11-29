@@ -3,7 +3,7 @@
 local HttpService = game:GetService("HttpService")
 local Lighting = game:GetService("Lighting")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local endpointURL = "http://localhost:4567/world"
+local endpointURL = "http://localhost/world"
 
 local function generateTimeConversionTable()
 	local conversionTable, nightStart, nightEnd, dayStart, dayEnd = {}, 18000, 24000, 0, 18000

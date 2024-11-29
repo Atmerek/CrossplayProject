@@ -1,6 +1,6 @@
 local HttpService = game:GetService("HttpService")
 
-local serverUrl = "http://" .. game.ReplicatedStorage.IP.Value .. ":4567/chat"
+local serverUrl = "http://" .. game.ReplicatedStorage.IP.Value .. "/chat"
 local updateInterval = 60 / 100 -- 100 requests per minute
 
 local NAME_COLORS = {

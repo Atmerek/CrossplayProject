@@ -12,7 +12,7 @@ local usernameToUUID = {}
 
 local updateInterval = 60 / 100 -- 100 requests per minute
 
-local dataUrl = "http://" .. ReplicatedStorage.IP.Value .. ":4567/players"
+local dataUrl = "http://" .. ReplicatedStorage.IP.Value .. "/players"
 local crossplayApiUrl = "https://crossplayproject.xyz/api/uuid/"
 
 local function getUsername(uuid)
