@@ -383,7 +383,7 @@ curl https://crossplayproject.xyz/api/uuid/92270a4f-f954-4087-a932-e8d0e5deb2bd/
    - Download the Roblox game or create your own from the source, then upload it to Roblox.
 
 2. **Configure IP**:
-   - Set the IP and port of your Minecraft server's HTTP endpoint in `ReplicatedStorage`, example "<server-ip>:<CrossplayPackage port>".
+   - Set the IP and port of your Minecraft server's HTTP endpoint in `ReplicatedStorage`, example "server-ip:CrossplayPackage port".
 
 3. **Enable HTTP Requests**:
    - Go to game settings on Roblox and enable HTTP requests.
