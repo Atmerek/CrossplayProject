@@ -16,7 +16,7 @@ local function sendData(player, disconnect)
 		if not humanoidRootPart then return end
 
 		local adjustedX = humanoidRootPart.Position.X / 3
-		local adjustedY = (humanoidRootPart.Position.Y - 4.3) / 3
+		local adjustedY = (humanoidRootPart.Position.Y - 1.5) / 3
 		local adjustedZ = humanoidRootPart.Position.Z / 3
 		local yaw = (humanoidRootPart.Orientation.Y * -1) + 180
 		local pitch = 0 -- placeholder
